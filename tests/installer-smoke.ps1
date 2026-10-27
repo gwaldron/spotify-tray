@@ -11,7 +11,7 @@ $installDir = Join-Path $env:RUNNER_TEMP 'SpotifyWidget Install Test'
 $logDir = Join-Path $taskRoot 'artifacts\smoke-logs'
 New-Item -ItemType Directory -Path $logDir -Force | Out-Null
 $exe = Join-Path $installDir 'SpotifyWidget.exe'
-$uninstaller = Join-Path $installDir 'unins000.exe'
+$uninstaller = $null
 $shortcut = Join-Path $env:APPDATA 'Microsoft\Windows\Start Menu\Programs\Spotify Widget.lnk'
 $uninstallKey = 'HKCU:\Software\Microsoft\Windows\CurrentVersion\Uninstall\{6A49B803-21CD-4F4F-B95C-B2BF215976ED}_is1'
 $runKey = 'HKCU:\Software\Microsoft\Windows\CurrentVersion\Run'
@@ -28,8 +28,14 @@ function Invoke-Checked([string]$File, [string[]]$Arguments) {
 }
 function Install-Widget([string]$LogName) {
     Invoke-Checked $installers[0].FullName @('/VERYSILENT', '/SUPPRESSMSGBOXES', '/NORESTART', '/SP-', "/DIR=`"$installDir`"", "/LOG=`"$logDir\$LogName`"")
-    foreach ($path in @($exe, $uninstaller, $shortcut, $uninstallKey)) {
+    foreach ($path in @($exe, $shortcut, $uninstallKey)) {
         if (-not (Test-Path -LiteralPath $path)) { throw "Installation missing: $path" }
+    }
+    # Inno can allocate unins001 after immediate reinstall while the previous
+    # uninstaller is still removing itself. Windows registration is authoritative.
+    $script:uninstaller = (Get-ItemPropertyValue -LiteralPath $uninstallKey -Name UninstallString).Trim('"')
+    if (-not (Test-Path -LiteralPath $script:uninstaller) -or (Split-Path $script:uninstaller -Parent) -ne $installDir) {
+        throw 'Registered uninstaller is missing or outside the installation directory.'
     }
     if ((Get-FileHash -LiteralPath $exe).Hash -ne (Get-FileHash -LiteralPath (Join-Path $taskRoot 'artifacts\publish\SpotifyWidget.exe')).Hash) {
         throw 'Installed executable differs from the published binary.'
