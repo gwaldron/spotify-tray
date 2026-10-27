@@ -2,6 +2,8 @@
 
 A small, always-visible Windows player for the Spotify desktop app. Shows the current song, artist, album art, playback status, and track progress, with previous, play/pause, and next buttons. No tray-icon click, browser, Spotify API key, or separate login is required.
 
+<img width="305" height="37" alt="image" src="https://github.com/user-attachments/assets/ee33bea4-6c53-467a-a3c5-0ce5f2133dee" />
+
 ## Run
 
 Download the installer or portable ZIP from [GitHub Releases](https://github.com/gwaldron/spotify-tray/releases/latest).
