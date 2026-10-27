@@ -16,6 +16,11 @@ $shortcut = Join-Path $env:APPDATA 'Microsoft\Windows\Start Menu\Programs\Spotif
 $uninstallKey = 'HKCU:\Software\Microsoft\Windows\CurrentVersion\Uninstall\{6A49B803-21CD-4F4F-B95C-B2BF215976ED}_is1'
 $runKey = 'HKCU:\Software\Microsoft\Windows\CurrentVersion\Run'
 
+function Get-StartupCommand {
+    # A missing value is the expected result after uninstall, not a provider error.
+    [Microsoft.Win32.Registry]::GetValue('HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Run', 'SpotifyWidget', $null)
+}
+
 function Invoke-Checked([string]$File, [string[]]$Arguments) {
     $child = Start-Process -FilePath $File -ArgumentList $Arguments -PassThru -WindowStyle Hidden
     if (-not $child.WaitForExit(60000)) { $child.Kill(); throw "Timed out: $File" }
@@ -38,7 +43,7 @@ function Uninstall-Widget([string]$LogName) {
 }
 
 Install-Widget 'install.log'
-if (Get-ItemPropertyValue -LiteralPath $runKey -Name SpotifyWidget -ErrorAction SilentlyContinue) { throw 'Installation unexpectedly enabled startup.' }
+if (Get-StartupCommand) { throw 'Installation unexpectedly enabled startup.' }
 # A real launch exercises extraction of the bundled runtime and loading WPF/WinRT.
 # A hosted runner may have no interactive media service; diagnostics still must be valid JSON.
 Invoke-Checked $exe @('--diagnose')
@@ -55,7 +60,7 @@ if ((Get-FileHash -LiteralPath $settingsFile).Hash -ne $settingsHash) { throw 'U
 New-Item -Path $runKey -Force | Out-Null
 New-ItemProperty -LiteralPath $runKey -Name SpotifyWidget -Value "`"$exe`"" -PropertyType String -Force | Out-Null
 Uninstall-Widget 'uninstall.log'
-if (Get-ItemPropertyValue -LiteralPath $runKey -Name SpotifyWidget -ErrorAction SilentlyContinue) { throw 'Uninstall left startup pointing to a removed executable.' }
+if (Get-StartupCommand) { throw 'Uninstall left startup pointing to a removed executable.' }
 if ((Get-FileHash -LiteralPath $settingsFile).Hash -ne $settingsHash) { throw 'Uninstall changed user settings.' }
 
 # A portable installation's startup preference must not be removed.
@@ -63,6 +68,6 @@ Install-Widget 'reinstall.log'
 $portableStartup = '"C:\Portable\SpotifyWidget.exe"'
 New-ItemProperty -LiteralPath $runKey -Name SpotifyWidget -Value $portableStartup -PropertyType String -Force | Out-Null
 Uninstall-Widget 'portable-preservation.log'
-if ((Get-ItemPropertyValue -LiteralPath $runKey -Name SpotifyWidget) -ne $portableStartup) { throw 'Uninstall removed another copy''s startup setting.' }
+if ((Get-StartupCommand) -ne $portableStartup) { throw 'Uninstall removed another copy''s startup setting.' }
 Remove-ItemProperty -LiteralPath $runKey -Name SpotifyWidget
 Write-Host 'Installer checks passed: install, bundled runtime, upgrade, shortcut, uninstall, settings, startup cleanup, portable preservation.'
