@@ -1,0 +1,43 @@
+<Window x:Class="SpotifyWidget.MainWindow" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Spotify Widget" Width="400" Height="68" WindowStyle="None" ResizeMode="NoResize" AllowsTransparency="True" Background="Transparent"
+        Topmost="True" ShowInTaskbar="False" ShowActivated="False" UseLayoutRounding="True" FontFamily="Segoe UI" Loaded="WindowLoaded" PreviewKeyDown="WindowKeyDown">
+  <Border x:Name="Card" CornerRadius="12" Background="#F5181D1A" BorderBrush="#414A44" BorderThickness="1" MouseLeftButtonDown="DragWidget">
+    <Border.ContextMenu><ContextMenu x:Name="OptionsMenu" Opened="OptionsOpened">
+      <MenuItem Header="Open Spotify" Click="OpenSpotify"/>
+      <Separator/>
+      <MenuItem x:Name="AboveMenu" Header="Bottom left, above taskbar" IsCheckable="True" Click="AboveTaskbar"/>
+      <MenuItem x:Name="OverlayMenu" Header="Left side of taskbar (overlay)" IsCheckable="True" Click="OnTaskbar" ToolTip="May cover Widgets or left-aligned taskbar buttons. Drag the player to move it."/>
+      <MenuItem Header="Reset position" Click="AboveTaskbar"/>
+      <Separator/>
+      <MenuItem x:Name="StartupMenu" Header="Start with Windows" IsCheckable="True" Click="ToggleStartup"/>
+      <MenuItem Header="Reconnect to Spotify" Click="Reconnect"/>
+      <Separator/>
+      <MenuItem Header="Quit widget" Click="Quit"/>
+    </ContextMenu></Border.ContextMenu>
+    <Grid Margin="9,0,7,0">
+      <Grid.ColumnDefinitions><ColumnDefinition Width="42"/><ColumnDefinition Width="12"/><ColumnDefinition Width="*"/><ColumnDefinition Width="8"/><ColumnDefinition Width="102"/><ColumnDefinition Width="24"/></Grid.ColumnDefinitions>
+      <Border x:Name="ArtFrame" Width="42" Height="42" CornerRadius="7" Background="#29382E" VerticalAlignment="Center" ClipToBounds="True" ToolTip="Spotify · drag to move">
+        <Grid><TextBlock Text="&#xE8D6;" FontFamily="Segoe MDL2 Assets" FontSize="22" Foreground="#1ED760" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+          <Image x:Name="AlbumArt" Stretch="UniformToFill"/></Grid>
+      </Border>
+      <StackPanel Grid.Column="2" VerticalAlignment="Center" ToolTip="Drag to move · right-click for options">
+        <TextBlock x:Name="SongTitle" Text="Connecting to Spotify…" FontSize="13" FontWeight="SemiBold" Foreground="#F7F9F7" TextTrimming="CharacterEllipsis"/>
+        <StackPanel Orientation="Horizontal" Margin="0,3,0,0">
+          <Ellipse x:Name="StatusDot" Width="5" Height="5" Fill="#7A857E" Margin="0,0,5,0"/>
+          <TextBlock x:Name="ArtistName" Text="Your music, always in view" FontSize="11" Foreground="#AEBAB1" TextTrimming="CharacterEllipsis" MaxWidth="177"/>
+        </StackPanel>
+      </StackPanel>
+      <StackPanel Grid.Column="4" Orientation="Horizontal" VerticalAlignment="Center">
+        <Button x:Name="PreviousButton" IsEnabled="False" Click="Previous" ToolTip="Previous track" AutomationProperties.Name="Previous track"><Path Fill="{Binding Foreground, RelativeSource={RelativeSource AncestorType=Button}}" Data="M 0,0 L 2,0 2,12 0,12 Z M 12,0 L 12,12 3,6 Z"/></Button>
+        <Button x:Name="PlayButton" IsEnabled="False" Width="34" Height="34" Margin="4,0" Background="#1ED760" Foreground="#102417" Click="PlayPause" ToolTip="Play" AutomationProperties.Name="Play">
+          <Path x:Name="PlayGlyph" Fill="{Binding Foreground, RelativeSource={RelativeSource AncestorType=Button}}" Data="M 2,0 L 12,7 2,14 Z"/>
+        </Button>
+        <Button x:Name="NextButton" IsEnabled="False" Click="Next" ToolTip="Next track" AutomationProperties.Name="Next track"><Path Fill="{Binding Foreground, RelativeSource={RelativeSource AncestorType=Button}}" Data="M 0,0 L 9,6 0,12 Z M 10,0 L 12,0 12,12 10,12 Z"/></Button>
+      </StackPanel>
+      <Button Grid.Column="5" Width="24" Click="ShowOptions" ToolTip="Options" AutomationProperties.Name="Options"><TextBlock Text="&#xE712;" FontFamily="Segoe MDL2 Assets" FontSize="14"/></Button>
+      <Border x:Name="ProgressTrack" Grid.Column="2" Grid.ColumnSpan="3" Height="2" VerticalAlignment="Bottom" Margin="0,0,4,5" Background="#303A33" CornerRadius="1">
+        <Border x:Name="ProgressFill" Width="0" HorizontalAlignment="Left" Background="#1ED760" CornerRadius="1"/>
+      </Border>
+    </Grid>
+  </Border>
+</Window>
