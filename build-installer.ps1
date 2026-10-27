@@ -31,5 +31,6 @@ Compress-Archive -LiteralPath (Join-Path $publishDir 'SpotifyWidget.exe'), (Join
 $checksums = foreach ($file in @($installer, $portable)) {
     '{0}  {1}' -f (Get-FileHash -LiteralPath $file -Algorithm SHA256).Hash.ToLowerInvariant(), [IO.Path]::GetFileName($file)
 }
-$checksums | Set-Content -LiteralPath (Join-Path $artifactDir 'SHA256SUMS.txt') -Encoding ascii
+# LF endings keep GNU sha256sum on the release runner from treating CR as part of a filename.
+[IO.File]::WriteAllText((Join-Path $artifactDir 'SHA256SUMS.txt'), ($checksums -join "`n") + "`n", [Text.Encoding]::ASCII)
 Write-Host "Release files: $artifactDir"
