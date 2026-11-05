@@ -3,5 +3,6 @@
   <ItemGroup>
     <Compile Include="../SpotifyWidget/Placement.cs" Link="Placement.cs"/>
     <Compile Include="../SpotifyWidget/SpotifyIdentity.cs" Link="SpotifyIdentity.cs"/>
+    <Compile Include="../SpotifyWidget/DragGesture.cs" Link="DragGesture.cs"/>
   </ItemGroup>
 </Project>

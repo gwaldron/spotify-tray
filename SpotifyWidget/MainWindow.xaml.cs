@@ -16,6 +16,7 @@ public partial class MainWindow : Window
     private readonly WidgetSettings _settings = WidgetSettings.Load();
     private readonly DispatcherTimer _timer = new() { Interval = TimeSpan.FromSeconds(1) };
     private readonly SemaphoreSlim _mediaLock = new(1, 1);
+    private readonly DragGesture _dragGesture = new();
     private bool _closed, _dragging, _positioning, _commandPending;
     private MediaState? _state;
     private nint _handle;
@@ -176,21 +177,49 @@ public partial class MainWindow : Window
     }
     private void Quit(object sender, RoutedEventArgs e) => Close();
 
-    private void DragWidget(object sender, MouseButtonEventArgs e)
+    private void BeginDrag(object sender, MouseButtonEventArgs e)
     {
+        _dragGesture.Cancel();
         // Let buttons handle their own clicks; only the album and track area drag the window.
         for (DependencyObject? item = e.OriginalSource as DependencyObject; item is not null; item = VisualTreeHelper.GetParent(item))
             if (item is ButtonBase) return;
-        if (e.ClickCount == 2) { OpenSpotify(sender, e); return; }
+        if (e.ClickCount == 2) { e.Handled = true; OpenSpotify(sender, e); return; }
+        var point = e.GetPosition(Card);
+        if (Card.CaptureMouse()) _dragGesture.Begin(point.X, point.Y);
+        e.Handled = true;
+    }
+
+    private void EndDrag(object sender, MouseButtonEventArgs e)
+    {
+        _dragGesture.Cancel();
+        if (Card.IsMouseCaptured) Card.ReleaseMouseCapture();
+    }
+
+    private void CancelDrag(object sender, MouseEventArgs e) => _dragGesture.Cancel();
+
+    private void ContinueDrag(object sender, MouseEventArgs e)
+    {
+        var point = e.GetPosition(Card);
+        if (!_dragGesture.TryStart(point.X, point.Y, e.LeftButton == MouseButtonState.Pressed,
+            SystemParameters.MinimumHorizontalDragDistance, SystemParameters.MinimumVerticalDragDistance)) return;
+
+        // A plain click must never enter DragMove: Windows can pull a window out of
+        // the taskbar even before the user moves it, and Free mode then clamps it above it.
+        var originalPosition = PointToScreen(new Point(0, 0));
         _dragging = true;
         try
         {
+            Card.ReleaseMouseCapture();
             DragMove();
             var origin = PointToScreen(new Point(0, 0));
-            _settings.Placement = "Free"; _settings.Left = origin.X; _settings.Top = origin.Y; _settings.Save();
+            if (origin != originalPosition)
+            {
+                _settings.Placement = "Free"; _settings.Left = origin.X; _settings.Top = origin.Y; _settings.Save();
+            }
         }
         catch (InvalidOperationException) { /* Mouse was released before the drag began. */ }
-        finally { _dragging = false; }
+        finally { _dragging = false; _dragGesture.Cancel(); }
+        e.Handled = true;
         ApplyPosition();
     }
 

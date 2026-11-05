@@ -1,11 +1,13 @@
-An always-visible Spotify mini-player for Windows 10/11.
+Fixes the player jumping out of the taskbar when you click the album art or song area.
 
-- Song, artist, album art, playback status, and progress.
-- Previous, Play/Pause, and Next controls for the local Spotify desktop app.
-- Bottom-left placement, optional taskbar overlay, and draggable saved position.
-- Optional startup with Windows; no API key or extra Spotify login.
+- Normal clicks and small pointer movements keep the player docked.
+- Deliberate dragging still moves the player and saves its new position.
+- Double-clicking still opens Spotify, and playback buttons keep their normal behavior.
+- Added regression checks for clicks, pointer jitter, released/cancelled gestures, and drag thresholds.
 
-Download **SpotifyWidget-Setup-1.0.0-x64.exe** for the installer, or **SpotifyWidget-Portable-1.0.0-x64.zip** for a portable copy. Both include the .NET runtime.
+Download **SpotifyWidget-Setup-1.0.1-x64.exe** for the installer, or **SpotifyWidget-Portable-1.0.1-x64.zip** for a portable copy. Both include the .NET runtime.
+
+If an earlier click already undocked your player, choose **… → Left side of taskbar (overlay)** once to dock it again.
 
 The installer runs without administrator privileges, adds a Start menu shortcut, and supports uninstall through Windows Settings. Quit any running copy of the widget before installing or upgrading. Startup remains off until enabled in the widget's options menu.
 

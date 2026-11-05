@@ -28,4 +28,22 @@ foreach (double scale in new[] { 1.0, 1.25, 1.5, 2.0 })
     Check(p.X >= area.Left && p.Y >= area.Top && p.X + 400 * scale <= area.Right && p.Y + 68 * scale <= area.Bottom,
         $"Widget stays within the work area at {scale:P0}");
 }
+var gesture = new DragGesture();
+Check(!gesture.TryStart(120, 20, true, 4, 4), "Moving over the widget without pressing it cannot undock it");
+gesture.Begin(100, 20);
+Check(!gesture.TryStart(100, 20, true, 4, 4), "Stationary click doesn't enter the native move loop");
+Check(!gesture.TryStart(103, 23, true, 4, 4), "Small pointer jitter keeps the widget docked");
+Check(!gesture.TryStart(100, 20, false, 4, 4), "Releasing a click doesn't start a drag");
+Check(!gesture.TryStart(120, 20, true, 4, 4), "A released gesture cannot start later");
+gesture.Begin(100, 20);
+Check(gesture.TryStart(104, 20, true, 4, 4), "Deliberate horizontal drag starts at the Windows threshold");
+Check(!gesture.TryStart(130, 20, true, 4, 4), "A drag starts only one native move loop");
+gesture.Begin(100, 20);
+Check(gesture.TryStart(100, 16, true, 4, 4), "Deliberate upward drag can move the widget off the taskbar");
+gesture.Begin(100, 20);
+gesture.Cancel();
+Check(!gesture.TryStart(110, 20, true, 4, 4), "Lost capture or double-click cancels pending dragging");
+gesture.Begin(100, 20);
+Check(!gesture.TryStart(105, 20, true, 8, 8), "Larger system drag thresholds are respected");
+Check(gesture.TryStart(108, 20, true, 8, 8), "Deliberate drag works with larger thresholds");
 Console.WriteLine($"{checks} checks passed.");

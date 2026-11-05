@@ -11,7 +11,7 @@ Enjoying the widget? [Buy me a wine on Ko-fi](https://ko-fi.com/gwaldron).
 
 Download the installer or portable ZIP from [GitHub Releases](https://github.com/gwaldron/spotify-tray/releases/latest).
 
-**Installer:** Run `SpotifyWidget-Setup-1.0.0-x64.exe`. It installs for your user under `%LOCALAPPDATA%\Programs\SpotifyWidget`, adds a Start menu shortcut, and offers an optional desktop shortcut. No administrator access is required. Quit a running widget before installation or upgrades. Uninstall from Windows Settings → Apps; preferences are retained, and startup is removed only if it points to the uninstalled copy. Releases are currently unsigned.
+**Installer:** Run `SpotifyWidget-Setup-1.0.1-x64.exe`. It installs for your user under `%LOCALAPPDATA%\Programs\SpotifyWidget`, adds a Start menu shortcut, and offers an optional desktop shortcut. No administrator access is required. Quit a running widget before installation or upgrades. Uninstall from Windows Settings → Apps; preferences are retained, and startup is removed only if it points to the uninstalled copy. Releases are currently unsigned.
 
 **Portable:** Extract the ZIP and open `SpotifyWidget.exe`.
 
@@ -19,7 +19,7 @@ Open `dist\SpotifyWidget\SpotifyWidget.exe`. The default build includes its own 
 
 The player starts at the bottom left, just above the taskbar, and stays on top of normal windows. It remains visible when Spotify is paused or closed, and reconnects automatically. Windows secure screens and exclusive fullscreen apps can cover it.
 
-- Drag the album art or song area to move it; the position is remembered.
+- Click the album art or song area without changing the dock position. Drag it beyond the Windows movement threshold to reposition it; the new position is remembered.
 - Click **…** or right-click for options, position reset, reconnect, and quit.
 - Choose **Left side of taskbar (overlay)** for a shorter player over the taskbar's left end. This can cover Widgets, Start, or pinned apps, depending on your taskbar layout. Use the default above-taskbar mode if they overlap. Vertical taskbars fall back to above-taskbar placement.
 - Choose **Start with Windows** to enable optional startup for the current user. Keep the executable in that location; toggle the setting again after moving it. Startup is off by default.
