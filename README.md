@@ -1,10 +1,11 @@
 # Spotify Widget
 
-A small, always-visible Windows player for the Spotify desktop app. Shows the current song, artist, album art, playback status, and track progress, with previous, play/pause, and next buttons. No tray-icon click, browser, Spotify API key, or separate login is required.
+A small, always-visible Windows player for the Spotify desktop app. No tray-icon click, browser, Spotify API key, or separate login is required.
 
 <img width="305" height="37" alt="image" src="https://github.com/user-attachments/assets/ee33bea4-6c53-467a-a3c5-0ce5f2133dee" />
 
-Enjoying the widget? [Buy me a coffee on Ko-fi](https://ko-fi.com/gwaldron).
+
+Enjoying the widget? [Buy me a wine on Ko-fi](https://ko-fi.com/gwaldron).
 
 ## Run
 
