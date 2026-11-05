@@ -4,6 +4,8 @@ A small, always-visible Windows player for the Spotify desktop app. Shows the cu
 
 <img width="305" height="37" alt="image" src="https://github.com/user-attachments/assets/ee33bea4-6c53-467a-a3c5-0ce5f2133dee" />
 
+Enjoying the widget? [Buy me a coffee on Ko-fi](https://ko-fi.com/gwaldron).
+
 ## Run
 
 Download the installer or portable ZIP from [GitHub Releases](https://github.com/gwaldron/spotify-tray/releases/latest).
