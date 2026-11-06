@@ -1,11 +1,11 @@
-Fixes the player jumping out of the taskbar when you click the album art or song area.
+Click anywhere on the widget except a control to bring up Spotify.
 
-- Normal clicks and small pointer movements keep the player docked.
+- A single click on artwork, song text, or empty space opens Spotify and keeps the player docked.
 - Deliberate dragging still moves the player and saves its new position.
-- Double-clicking still opens Spotify, and playback buttons keep their normal behavior.
-- Added regression checks for clicks, pointer jitter, released/cancelled gestures, and drag thresholds.
+- Playback and options buttons keep their normal behavior, including when playback controls are unavailable.
+- Clicks open Spotify on release; dragging or losing mouse capture does not open it.
 
-Download **SpotifyWidget-Setup-1.0.1-x64.exe** for the installer, or **SpotifyWidget-Portable-1.0.1-x64.zip** for a portable copy. Both include the .NET runtime.
+Download **SpotifyWidget-Setup-1.0.2-x64.exe** for the installer, or **SpotifyWidget-Portable-1.0.2-x64.zip** for a portable copy. Both include the .NET runtime.
 
 If an earlier click already undocked your player, choose **… → Left side of taskbar (overlay)** once to dock it again.
 

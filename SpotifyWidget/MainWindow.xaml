@@ -17,11 +17,11 @@
     </ContextMenu></Border.ContextMenu>
     <Grid Margin="9,0,7,0">
       <Grid.ColumnDefinitions><ColumnDefinition Width="42"/><ColumnDefinition Width="12"/><ColumnDefinition Width="*"/><ColumnDefinition Width="8"/><ColumnDefinition Width="102"/><ColumnDefinition Width="24"/></Grid.ColumnDefinitions>
-      <Border x:Name="ArtFrame" Width="42" Height="42" CornerRadius="7" Background="#29382E" VerticalAlignment="Center" ClipToBounds="True" ToolTip="Spotify · drag to move">
+      <Border x:Name="ArtFrame" Width="42" Height="42" CornerRadius="7" Background="#29382E" VerticalAlignment="Center" ClipToBounds="True" ToolTip="Click to open Spotify · drag to move">
         <Grid><TextBlock Text="&#xE8D6;" FontFamily="Segoe MDL2 Assets" FontSize="22" Foreground="#1ED760" HorizontalAlignment="Center" VerticalAlignment="Center"/>
           <Image x:Name="AlbumArt" Stretch="UniformToFill"/></Grid>
       </Border>
-      <StackPanel Grid.Column="2" VerticalAlignment="Center" ToolTip="Drag to move · right-click for options">
+      <StackPanel Grid.Column="2" VerticalAlignment="Center" ToolTip="Click to open Spotify · drag to move · right-click for options">
         <TextBlock x:Name="SongTitle" Text="Connecting to Spotify…" FontSize="13" FontWeight="SemiBold" Foreground="#F7F9F7" TextTrimming="CharacterEllipsis"/>
         <StackPanel Orientation="Horizontal" Margin="0,3,0,0">
           <Ellipse x:Name="StatusDot" Width="5" Height="5" Fill="#7A857E" Margin="0,0,5,0"/>

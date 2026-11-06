@@ -8,6 +8,15 @@ public sealed class DragGesture
     public void Begin(double x, double y) => _start = (x, y);
     public void Cancel() => _start = null;
 
+    public bool CompleteClick(double x, double y, double horizontalThreshold, double verticalThreshold)
+    {
+        var start = _start;
+        Cancel();
+        return start is { } point
+            && Math.Abs(x - point.X) < horizontalThreshold
+            && Math.Abs(y - point.Y) < verticalThreshold;
+    }
+
     public bool TryStart(double x, double y, bool leftButtonPressed, double horizontalThreshold, double verticalThreshold)
     {
         if (!leftButtonPressed) { Cancel(); return false; }

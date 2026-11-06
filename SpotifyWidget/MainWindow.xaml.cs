@@ -180,19 +180,22 @@ public partial class MainWindow : Window
     private void BeginDrag(object sender, MouseButtonEventArgs e)
     {
         _dragGesture.Cancel();
-        // Let buttons handle their own clicks; only the album and track area drag the window.
-        for (DependencyObject? item = e.OriginalSource as DependencyObject; item is not null; item = VisualTreeHelper.GetParent(item))
-            if (item is ButtonBase) return;
-        if (e.ClickCount == 2) { e.Handled = true; OpenSpotify(sender, e); return; }
         var point = e.GetPosition(Card);
+        // Hit-test visuals so disabled playback buttons are excluded too.
+        for (DependencyObject? item = VisualTreeHelper.HitTest(Card, point)?.VisualHit; item is not null; item = VisualTreeHelper.GetParent(item))
+            if (item is ButtonBase) return;
         if (Card.CaptureMouse()) _dragGesture.Begin(point.X, point.Y);
         e.Handled = true;
     }
 
     private void EndDrag(object sender, MouseButtonEventArgs e)
     {
-        _dragGesture.Cancel();
+        var point = e.GetPosition(Card);
+        bool clicked = _dragGesture.CompleteClick(point.X, point.Y,
+            SystemParameters.MinimumHorizontalDragDistance, SystemParameters.MinimumVerticalDragDistance);
+        clicked &= Card.IsMouseCaptured && new Rect(Card.RenderSize).Contains(point);
         if (Card.IsMouseCaptured) Card.ReleaseMouseCapture();
+        if (clicked) { e.Handled = true; OpenSpotify(sender, e); }
     }
 
     private void CancelDrag(object sender, MouseEventArgs e) => _dragGesture.Cancel();
