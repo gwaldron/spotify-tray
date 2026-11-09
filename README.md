@@ -2,6 +2,8 @@
 
 **Your music, always in view.**
 
+[Visit the website](https://gwaldron.github.io/spotify-tray/)
+
 A small, always-visible Spotify player for Windows. See the song, artist, and album art, and pause, play, or skip tracks right from your taskbar. Click the artwork or song to bring up Spotify.
 
 <p align="center">
