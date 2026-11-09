@@ -30,7 +30,7 @@ $installer = Join-Path $artifactDir "SpotifyWidget-Setup-$version-x64.exe"
 $directInstaller = Join-Path $artifactDir 'SpotifyTaskbarWidget-Setup-x64.exe'
 Copy-Item -LiteralPath $installer -Destination $directInstaller -Force
 $portable = Join-Path $artifactDir "SpotifyWidget-Portable-$version-x64.zip"
-Compress-Archive -LiteralPath (Join-Path $publishDir 'SpotifyWidget.exe'), (Join-Path $publishDir 'README.md') -DestinationPath $portable -Force
+Compress-Archive -LiteralPath (Join-Path $publishDir 'SpotifyWidget.exe'), (Join-Path $publishDir 'README.md'), (Join-Path $publishDir 'LICENSE') -DestinationPath $portable -Force
 $checksums = foreach ($file in @($installer, $directInstaller, $portable)) {
     '{0}  {1}' -f (Get-FileHash -LiteralPath $file -Algorithm SHA256).Hash.ToLowerInvariant(), [IO.Path]::GetFileName($file)
 }

@@ -22,4 +22,6 @@ Requires **Windows 10 (version 2004+) or Windows 11, x64**, and the **Spotify de
 
 [Usage, troubleshooting & building from source](https://github.com/gwaldron/spotify-tray/blob/main/docs/guide.md) · [Report an issue](https://github.com/gwaldron/spotify-tray/issues) · [Buy me a wine on Ko-fi](https://ko-fi.com/gwaldron)
 
+[MIT licensed](https://github.com/gwaldron/spotify-tray/blob/main/LICENSE).
+
 <sub>Independent project, not affiliated with Spotify. Windows builds are currently unsigned.</sub>

@@ -40,6 +40,7 @@ Name: "desktopicon"; Description: "Create a desktop shortcut"; GroupDescription:
 [Files]
 Source: "{#PublishDir}\SpotifyWidget.exe"; DestDir: "{app}"; Flags: ignoreversion
 Source: "{#PublishDir}\README.md"; DestDir: "{app}"; Flags: ignoreversion
+Source: "{#PublishDir}\LICENSE"; DestDir: "{app}"; Flags: ignoreversion
 
 [Icons]
 Name: "{autoprograms}\Spotify Widget"; Filename: "{app}\SpotifyWidget.exe"

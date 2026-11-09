@@ -11,4 +11,5 @@ $selfContained = if ($FrameworkDependent) { 'false' } else { 'true' }
 & $dotnetPath publish (Join-Path $taskRoot 'SpotifyWidget\SpotifyWidget.csproj') -c Release -r win-x64 --self-contained $selfContained -p:PublishSingleFile=true -p:IncludeNativeLibrariesForSelfExtract=true -p:EnableCompressionInSingleFile=true -p:DebugType=None -o $OutputDirectory
 if ($LASTEXITCODE -ne 0) { throw 'Build failed' }
 Copy-Item -LiteralPath (Join-Path $taskRoot 'README.md') -Destination (Join-Path $OutputDirectory 'README.md') -Force
+Copy-Item -LiteralPath (Join-Path $taskRoot 'LICENSE') -Destination (Join-Path $OutputDirectory 'LICENSE') -Force
 Write-Host "Ready: $OutputDirectory\SpotifyWidget.exe"

@@ -37,7 +37,7 @@ function Invoke-Checked([string]$File, [string[]]$Arguments) {
 }
 function Install-Widget([string]$LogName) {
     Invoke-Checked $installers[0].FullName @('/VERYSILENT', '/SUPPRESSMSGBOXES', '/NORESTART', '/SP-', "/DIR=`"$installDir`"", "/LOG=`"$logDir\$LogName`"")
-    foreach ($path in @($exe, $shortcut, $uninstallKey)) {
+    foreach ($path in @($exe, (Join-Path $installDir 'LICENSE'), $shortcut, $uninstallKey)) {
         if (-not (Test-Path -LiteralPath $path)) { throw "Installation missing: $path" }
     }
     # Inno can allocate unins001 after immediate reinstall while the previous
