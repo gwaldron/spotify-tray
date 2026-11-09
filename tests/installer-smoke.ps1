@@ -7,6 +7,15 @@ if ($env:GITHUB_ACTIONS -ne 'true' -or $env:RUNNER_ENVIRONMENT -ne 'github-hoste
 $taskRoot = Split-Path $PSScriptRoot -Parent
 $installers = @(Get-ChildItem (Join-Path $taskRoot 'artifacts\release\SpotifyWidget-Setup-*-x64.exe'))
 if ($installers.Count -ne 1) { throw 'Expected exactly one installer.' }
+$directInstaller = Join-Path $taskRoot 'artifacts\release\SpotifyTaskbarWidget-Setup-x64.exe'
+$installerHash = (Get-FileHash -LiteralPath $installers[0].FullName -Algorithm SHA256).Hash
+if ((Get-FileHash -LiteralPath $directInstaller -Algorithm SHA256).Hash -ne $installerHash) {
+    throw 'The direct-download installer must be identical to the versioned installer.'
+}
+$checksums = Get-Content -LiteralPath (Join-Path $taskRoot 'artifacts\release\SHA256SUMS.txt')
+if ($checksums -notcontains ($installerHash.ToLowerInvariant() + '  SpotifyTaskbarWidget-Setup-x64.exe')) {
+    throw 'The direct-download installer is missing from the checksum manifest.'
+}
 $installDir = Join-Path $env:RUNNER_TEMP 'SpotifyWidget Install Test'
 $logDir = Join-Path $taskRoot 'artifacts\smoke-logs'
 New-Item -ItemType Directory -Path $logDir -Force | Out-Null

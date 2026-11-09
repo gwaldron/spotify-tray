@@ -26,9 +26,12 @@ New-Item -ItemType Directory -Path $artifactDir -Force | Out-Null
 if ($LASTEXITCODE -ne 0) { throw 'Installer compilation failed.' }
 
 $installer = Join-Path $artifactDir "SpotifyWidget-Setup-$version-x64.exe"
+# Keep this asset name stable so /releases/latest/download works across versions.
+$directInstaller = Join-Path $artifactDir 'SpotifyTaskbarWidget-Setup-x64.exe'
+Copy-Item -LiteralPath $installer -Destination $directInstaller -Force
 $portable = Join-Path $artifactDir "SpotifyWidget-Portable-$version-x64.zip"
 Compress-Archive -LiteralPath (Join-Path $publishDir 'SpotifyWidget.exe'), (Join-Path $publishDir 'README.md') -DestinationPath $portable -Force
-$checksums = foreach ($file in @($installer, $portable)) {
+$checksums = foreach ($file in @($installer, $directInstaller, $portable)) {
     '{0}  {1}' -f (Get-FileHash -LiteralPath $file -Algorithm SHA256).Hash.ToLowerInvariant(), [IO.Path]::GetFileName($file)
 }
 # LF endings keep GNU sha256sum on the release runner from treating CR as part of a filename.

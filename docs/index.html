@@ -5,11 +5,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="An always-visible Spotify player for Windows. See what's playing, control your music, and open Spotify from a small taskbar widget.">
   <meta name="theme-color" content="#102b23">
-  <meta property="og:title" content="Spotify Widget — Your music, always in view">
+  <meta property="og:title" content="Spotify Taskbar Widget — Your music, always in view">
   <meta property="og:description" content="A small Spotify player for your Windows taskbar. Download the latest version from GitHub.">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://gwaldron.github.io/spotify-tray/">
-  <title>Spotify Widget — Your music, always in view</title>
+  <title>Spotify Taskbar Widget — Your music, always in view</title>
   <link rel="icon" href="./icon.svg" type="image/svg+xml">
   <style>
     :root { color-scheme: light; --ink: #102b23; --muted: #52645a; --paper: #f5f5ed; --green: #c7f581; --line: #d5ded0; }
@@ -19,7 +19,7 @@
     a:hover { text-decoration-thickness: 2px; }
     a:focus-visible { outline: 3px solid #287449; outline-offset: 6px; }
     .wrap { width: min(1080px, calc(100% - 48px)); margin-inline: auto; }
-    header { padding-block: 28px; display: flex; align-items: center; justify-content: space-between; gap: 20px; }
+    header { padding-block: 28px; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 20px; }
     .brand { display: inline-flex; align-items: center; gap: 11px; font-weight: 700; text-decoration: none; font-size: 18px; }
     .brand img { width: 32px; height: 32px; }
     nav { display: flex; gap: 24px; font-size: 14px; }
@@ -72,7 +72,7 @@
 </head>
 <body>
   <header class="wrap">
-    <a class="brand" href="./" aria-label="Spotify Widget home"><img src="./icon.svg" alt="" width="32" height="32">Spotify Widget</a>
+    <a class="brand" href="./" aria-label="Spotify Taskbar Widget home"><img src="./icon.svg" alt="" width="32" height="32">Spotify Taskbar Widget</a>
     <nav aria-label="Main navigation">
       <a class="guide" href="https://github.com/gwaldron/spotify-tray/blob/main/docs/guide.md">Guide</a>
       <a href="https://github.com/gwaldron/spotify-tray">GitHub ↗</a>
@@ -83,16 +83,16 @@
     <h1>Your music,<br><span>always in view.</span></h1>
     <p class="intro">See what’s playing without leaving what you’re doing. A small, always-visible Spotify widget with album art and playback controls, right on your taskbar.</p>
     <div class="actions">
-      <a class="download" href="https://github.com/gwaldron/spotify-tray/releases/latest">
+      <a class="download" href="https://github.com/gwaldron/spotify-tray/releases/latest/download/SpotifyTaskbarWidget-Setup-x64.exe">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M12 3v12m-5-5 5 5 5-5M4 16v5h16v-5"/></svg>
-        Download latest version
+        Download for Windows
       </a>
       <a class="secondary" href="https://ko-fi.com/gwaldron">Buy me a wine ↗</a>
     </div>
-    <p class="requirements">Windows 10 (2004+) or Windows 11 · x64 · Spotify desktop app required<br>Installer and portable ZIP available on GitHub. No administrator access needed.</p>
+    <p class="requirements">Latest Windows installer · Windows 10 (2004+) or Windows 11 · x64<br>Spotify desktop app required. No administrator access needed.<br><a href="https://github.com/gwaldron/spotify-tray/releases/latest">Portable ZIP &amp; release notes →</a></p>
     <figure>
       <div class="preview">
-        <img src="https://github.com/user-attachments/assets/ee33bea4-6c53-467a-a3c5-0ce5f2133dee" alt="Spotify Widget displaying album art, song and artist, with previous, play/pause, next, and options controls">
+        <img src="https://github.com/user-attachments/assets/ee33bea4-6c53-467a-a3c5-0ce5f2133dee" alt="Spotify Taskbar Widget displaying album art, song and artist, with previous, play/pause, next, and options controls">
         <p>Your next song is always within reach.</p>
       </div>
       <figcaption><span>The widget, in its taskbar layout.</span><span>Small footprint. All the essentials.</span></figcaption>
@@ -103,7 +103,7 @@
       <div class="detail"><h2>Just your local Spotify</h2><p>Track details and artwork come through Windows’ media interface. No screen capture, extra login, or API key.</p></div>
     </section>
     <section class="start" aria-labelledby="start-title">
-      <div><h2 id="start-title">Install. Play something. That’s it.</h2><p>Choose the Setup .exe from the latest release, or extract the portable ZIP.<br>Open the widget, then play a song in Spotify. The .NET runtime is included.</p></div>
+      <div><h2 id="start-title">Install. Play something. That’s it.</h2><p>Download and run the installer, then open the widget and play a song in Spotify.<br>The .NET runtime is included. A portable ZIP is also available.</p></div>
       <a href="https://github.com/gwaldron/spotify-tray/blob/main/docs/guide.md">Read the guide →</a>
     </section>
   </main>

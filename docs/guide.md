@@ -1,4 +1,4 @@
-# Spotify Widget guide
+# Spotify Taskbar Widget guide
 
 [Back to the project](https://github.com/gwaldron/spotify-tray)
 
@@ -41,6 +41,8 @@ dotnet run --project tests/SpotifyWidget.Checks.csproj -c Release
 ```
 
 ## Installer and GitHub releases
+
+The website and README download buttons use the stable `SpotifyTaskbarWidget-Setup-x64.exe` release asset. Packaging copies the versioned installer to this name and includes both in `SHA256SUMS.txt`, so the direct latest-release link keeps working after each release.
 
 Install [Inno Setup](https://jrsoftware.org/isinfo.php) 6.3 or newer and run `./build-installer.ps1` (optionally `-ISCCPath` with the compiler location). It builds into `artifacts/publish`, leaving any running `dist` copy alone, and produces the installer, portable ZIP, and `SHA256SUMS.txt` in `artifacts/release`.
 
